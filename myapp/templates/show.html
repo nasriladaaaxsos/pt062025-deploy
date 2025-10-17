@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All</title>
+</head>
+
+<body>
+
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>PhoneNumber</th>
+            <th>Delete</th>
+        </tr>
+
+        {% for user in allusers %}
+        <tr>
+            <td> <a href="/viewById/{{ user.id }}"> {{ user.id }} </a> </td>
+            <td> {{ user.firstname }} </td>
+            <td> {{ user.lastname }} </td>
+            <td> {{ user.email }} </td>
+            <td> {{ user.phonenumber }} </td>
+            <td> <button> Delete </button></td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <a href="/home">Home</a>
+    <a href="/signout">Sign Out</a>
+</body>
+
+</html>

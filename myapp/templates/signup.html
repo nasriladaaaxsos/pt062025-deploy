@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'mystyle.css' %}">
+</head>
+
+<body>
+    <h1>Sign up form</h1>
+
+    <form action="/regFrom/" method="post">
+        {% csrf_token %}
+        <label for=""> Firstname:</label>
+        <input type="text" name="firstname" id="">
+
+        <br>
+
+        <label for="">Lastname:</label>
+        <input type="text" name="lastname" id="">
+
+        <br>
+
+        <label for="">Phone</label>
+        <input type="text" name="phone" id="">
+
+        <br>
+
+        <label for="">Email</label>
+        <input type="text" name="email" id="">
+        <br>
+
+        <!-- 
+        <label for="">Password</label>
+        <input type="text" name="password" id="">
+        <br>
+-->
+
+        <!-- Ninja Gold -->
+        <input type="hidden" name="form_name" value="111111111">
+
+        <input type="submit" value="Register">
+    </form>
+
+    <br>
+    <a href="/">Go to Home</a>
+
+
+</body>
+
+</html>
