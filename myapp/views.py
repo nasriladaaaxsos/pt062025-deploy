@@ -68,4 +68,35 @@ def viewById(request , id):
     }
     return render(request, "details.html" , context)
     
+
+def delete_by_id(request):
+    if request.method == "POST":
+        if 'is_logged' in request.session: 
+            user_id = request.POST['user_id']
+            models.delete_user(user_id)
+            return redirect('/show')
+        else:
+            return redirect('/login')
+    else:
+        return redirect('/login')
+    
+    
+def add_address(request , user_id):
+    context = {
+        "user_id" : user_id
+    }
+    return render(request, "addaddress.html" , context)
+
+
+def add_new_address(request):
+    models.add_new_address(request.POST)
+    return redirect('/show')
+
+
+def view_addresses(request, id):
+    
+    context ={
+        "user" : models.get_all_addresss(id)
+    }
+    return render(request, "viewaddress.html" , context)
     

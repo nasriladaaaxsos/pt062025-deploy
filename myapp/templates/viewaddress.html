@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Addresses</title>
+</head>
+<body>
+    {{  user.firstname  }}
+
+    {% for address in user.addresses.all %}
+    <p> {{ address.country }}</p>
+
+    {% endfor  %}
+</body>
+</html>

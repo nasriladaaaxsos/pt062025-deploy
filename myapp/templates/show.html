@@ -18,6 +18,8 @@
             <th>Email</th>
             <th>PhoneNumber</th>
             <th>Delete</th>
+            <th> Add Address </th>
+            <th>View Addresses</th>
         </tr>
 
         {% for user in allusers %}
@@ -27,7 +29,22 @@
             <td> {{ user.lastname }} </td>
             <td> {{ user.email }} </td>
             <td> {{ user.phonenumber }} </td>
-            <td> <button> Delete </button></td>
+            <td> 
+                <form action="/delete_by_id" method="post" >
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <button>Delete</button>  
+                </form>
+                
+                
+            </td>
+            <td>
+                <a href="/addaddress/{{ user.id }} ">Add Address</a>
+
+            </td>
+            <td>
+                <a href="/viewaddress/{{ user.id }}">View Addresses</a>
+            </td>
         </tr>
         {% endfor %}
 
