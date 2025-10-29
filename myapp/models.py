@@ -12,7 +12,8 @@ class User(models.Model):  #users
     updated_At = models.DateTimeField( auto_now=True )
     #objects (inherited)
     #addresses
-    
+    #boats 
+
 class Address(models.Model):
     #id
     country = models.CharField(max_length=30)
@@ -21,6 +22,16 @@ class Address(models.Model):
     user = models.ForeignKey(User,  related_name="addresses"  ,    on_delete=models.DO_NOTHING  ) 
     created_at = models.DateTimeField( auto_now_add=True )
     updated_At = models.DateTimeField( auto_now=True )
+    #objects
+    
+
+class Boat(models.Model):
+    #id
+    name = models.CharField(max_length=30)
+    type_of_boat = models.CharField(max_length=30)
+    created_at = models.DateTimeField( auto_now_add=True )
+    updated_At = models.DateTimeField( auto_now=True )
+    users = models.ManyToManyField(User , related_name="boats")
     #objects
 
 def create_user( postData ):
@@ -57,3 +68,4 @@ def add_new_address(postData):
 
 def get_all_addresss(id):
     return get_user_by_id(id)
+
