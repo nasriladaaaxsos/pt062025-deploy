@@ -1,4 +1,25 @@
 from django.db import models
+import re 
+
+class UserManager(models.Manager):
+                                #request.POST
+    def validate_sign_up(self, postData ):
+        errors = { } 
+        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+        if len(postData['firstname']) < 5 :
+            errors['firstname_error'] = "Firstname should be more than 5 chars."
+        if len(postData['lastname']) < 5 :
+            errors['lastname_error'] = "Lastname should be more than 5 chars."
+        if   len(postData['phone']) < 11 :
+            errors['phone_error'] = "Phonenumber should be more than 10 chars."
+        if len(postData['email']) == 0:
+            errors['email_error'] = "Email should be filled."
+        if len(postData['password']) == 0:
+            errors['password_error'] = "Password should be filled."
+        if not EMAIL_REGEX.match(postData['email']):    # test whether a field matches the pattern            
+            errors['email'] = "Invalid email address!"
+        return errors 
+    
 
 # Create your models here.
 class User(models.Model):  #users
@@ -10,7 +31,7 @@ class User(models.Model):  #users
     password = models.CharField(max_length=25)
     created_at = models.DateTimeField( auto_now_add=True )
     updated_At = models.DateTimeField( auto_now=True )
-    #objects (inherited)
+    objects = UserManager()
     #addresses
     #boats 
 
@@ -22,7 +43,7 @@ class Address(models.Model):
     user = models.ForeignKey(User,  related_name="addresses"  ,    on_delete=models.DO_NOTHING  ) 
     created_at = models.DateTimeField( auto_now_add=True )
     updated_At = models.DateTimeField( auto_now=True )
-    #objects
+    #objects (inherited)
     
 
 class Boat(models.Model):

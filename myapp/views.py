@@ -1,5 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from . import models
+from django.contrib import messages
+import bcrypt
+
 
 # Create your views here.
 
@@ -38,9 +41,21 @@ def signup(request):
 #Views/Controllers should be skinny, models should be Fat
 def reg_form(request):
     if request.method == "POST":
-        models.create_user(request.POST)
-        request.session['is_logged']  = True
-        return redirect('/home')
+        
+        # add validation 
+        errors = models.User.objects.validate_sign_up(request.POST)
+        if len(errors) > 0 :
+            for key, value in errors.items():
+                messages.error(request, value)
+            
+            return redirect('/reg')
+        else:
+            
+            
+            
+            models.create_user(request.POST)
+            request.session['is_logged']  = True
+            return redirect('/home')
     else:
         return redirect('/login')
     

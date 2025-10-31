@@ -7,34 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="{% static 'mystyle.css' %}">
+    <script src=" {% static 'myscript.js' %}">  </script>
 </head>
 
 <body>
     <h1>Sign up form</h1>
 
-    <form action="/regFrom/" method="post">
+    <form action="/regFrom/" method="post" onsubmit="return validateForm()">
         {% csrf_token %}
         <label for=""> Firstname:</label>
-        <input type="text" name="firstname" id="">
+        <input type="text" name="firstname" id="firstname" oninput="return valiateFirstname(this)">
 
         <br>
 
         <label for="">Lastname:</label>
-        <input type="text" name="lastname" id="">
+        <input type="text" name="lastname" id="lastname">
 
         <br>
 
         <label for="">Phone</label>
-        <input type="text" name="phone" id="">
+        <input type="text" name="phone" id="phone">
 
         <br>
 
         <label for="">Email</label>
-        <input type="text" name="email" id="">
+        <input type="text" name="email" id="Email">
         <br>
 
         <label for="">Password</label>
-        <input type="password" name="password" id="">
+        <input type="password" name="password" id="Password">
         <br>
 
 
@@ -44,9 +45,22 @@
         <input type="submit" value="Register">
     </form>
 
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
     <br>
     <a href="/">Go to Home</a>
 
+<br>
+
+    <label for="" id="error_lbl"></label>
 
 </body>
 
