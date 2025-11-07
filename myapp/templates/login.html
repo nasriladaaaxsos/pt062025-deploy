@@ -12,15 +12,16 @@
 
     <form action="/login_form" method="post">
         {% csrf_token %}
-        <label for="">Username:</label>
+        <label for="">Email::</label>
         <input type="text" name="username" placeholder="fill username">
         <br>
         <label for="">Password:</label>
-        <input type="text" name="password" placeholder="fill password">
+        <input type="password" name="password" placeholder="fill password">
         <br>
         <button>Login</button>
     </form>
 
+    <p> {{ request.session.failed_login_error }}</p>
     <a href="/">Go to Home</a>
 </body>
 

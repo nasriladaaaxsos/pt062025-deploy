@@ -18,6 +18,8 @@ class UserManager(models.Manager):
             errors['password_error'] = "Password should be filled."
         if not EMAIL_REGEX.match(postData['email']):    # test whether a field matches the pattern            
             errors['email'] = "Invalid email address!"
+        if not User.objects.filter(email = postData['email'] ):
+            errors['email_error_unique'] = "Email or password does not exist!"
         return errors 
     
 
@@ -55,14 +57,14 @@ class Boat(models.Model):
     users = models.ManyToManyField(User , related_name="boats")
     #objects
 
-def create_user( postData ):
+def create_user( postData, hash_pw ):
     firstname  = postData['firstname'] 
     lastname = postData['lastname']
     phone = postData['phone']
     email = postData['email']
     form_name = postData['form_name']
-    password = postData['password']
-    User.objects.create( firstname = firstname , lastname = lastname , email = email , phonenumber = phone, password = password)
+    
+    User.objects.create( firstname = firstname , lastname = lastname , email = email , phonenumber = phone, password = hash_pw)
     
 def get_all_users():
     return User.objects.all()
@@ -90,3 +92,5 @@ def add_new_address(postData):
 def get_all_addresss(id):
     return get_user_by_id(id)
 
+def get_user_filter(email):
+    return User.objects.filter( email = email)

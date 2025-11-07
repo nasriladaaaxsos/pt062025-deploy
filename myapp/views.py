@@ -18,16 +18,20 @@ def login(request):
 
 def login_form(request):
     if request.method == "POST":
-        username = request.POST['username']
+        email = request.POST['username']
         password = request.POST['password']
 
         #test 
-        print(f" {username }  - {password}")
-
-        if username == "MohammadMfarjeh" and password == "password123":
-            request.session['is_logged']  = True  #Store
-            #del request.session['is_logged']
-            return redirect("/home")  # redirect to home page
+        print(f" {email }  - {password}")
+        user = models.get_user_filter(email)
+        if user:
+            logged_user = user[0]
+            if bcrypt.checkpw( password.encode()   ,   logged_user.password.encode()  ):
+                request.session['is_logged']  = True  #Store
+                return redirect("/home")  # redirect to home page
+            else:
+                request.session['failed_login_error']  = "Email or Password does not exist!"  #Store
+                return redirect('/login')
         else:
             return redirect('/login')
     else:
@@ -51,9 +55,10 @@ def reg_form(request):
             return redirect('/reg')
         else:
             
+            password = request.POST['password']
+            hash_pw = bcrypt.hashpw( password.encode() , bcrypt.gensalt() ).decode()  
             
-            
-            models.create_user(request.POST)
+            models.create_user(request.POST, hash_pw)
             request.session['is_logged']  = True
             return redirect('/home')
     else:
